@@ -6,7 +6,8 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import firestore from '@react-native-firebase/firestore';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,6 +16,8 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import gameService from './src/services/game';
+import useAsync from './src/hooks/useAsync';
 
 import {
   Header,
@@ -25,48 +28,36 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const App: () => React$Node = () => {
+  const [rooms, setRooms] = useState([]);
+  const {isLoading, isError, run} = useAsync();
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Rooms')
+      .onSnapshot(roomSnapshots => {
+        const data = roomSnapshots.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log(data);
+        setRooms(data);
+      });
+
+    return () => subscriber();
+  }, []);
+
+  useEffect(() => {
+    run(() => gameService.createRoom('Gopendra', 'RED'));
+  }, []);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+        <Text>hello</Text>
+        <View>
+          {rooms.length > 0 && rooms.map(r => <Text>{r.totalPlayers}</Text>)}
+        </View>
       </SafeAreaView>
     </>
   );
