@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "825766003967",
+    "firebase_url": "https://ludo-family.firebaseio.com",
+    "project_id": "ludo-family",
+    "storage_bucket": "ludo-family.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825766003967:android:56581575baa79e927ff8ca",
+        "android_client_info": {
+          "package_name": "com.ludofamily"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825766003967-ksc82apevgn62pj662jchlesnnge1dmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYBakNeAk8EtBePdjWzYfEGs4eWYzL9es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825766003967-ksc82apevgn62pj662jchlesnnge1dmf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
